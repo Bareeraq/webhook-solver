@@ -1,13 +1,18 @@
 package com.bajaj;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import java.util.Map;
-import java.util.HashMap;
 
 @Component
 public class WebhookSolver {
@@ -69,22 +74,25 @@ public class WebhookSolver {
             }
             
         } catch (Exception e) {
-            System.err.println(Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
     
     private String solveSqlProblem(String questionType) {
-        // TODO: Check your Google Drive link and implement SQL
-        
-        if ("ODD".equals(questionType)) {
-            // Question 1 SQL (EXAMPLE - replace with actual)
-            return "SELECT * FROM employees WHERE salary > 50000;";
-        } else {
-            // Question 2 SQL (EXAMPLE - replace with actual)
-            return "SELECT department, AVG(salary) FROM employees GROUP BY department;";
-        }
+    // QUESTION 2 SOLUTION
+        // QUESTION 2 SOLUTION 
+        return "SELECT d.DEPARTMENT_NAME, " +
+               "ROUND(AVG(YEAR(CURDATE())-YEAR(e.DOB)),2) AS AVERAGE_AGE, " +
+               "SUBSTRING_INDEX(GROUP_CONCAT(CONCAT(e.FIRST_NAME,' ',e.LAST_NAME) SEPARATOR ', '), ', ', 10) AS EMPLOYEE_LIST " +
+               "FROM DEPARTMENT d " +
+               "JOIN EMPLOYEE e ON d.DEPARTMENT_ID=e.DEPARTMENT " +
+               "JOIN PAYMENTS p ON e.EMP_ID=p.EMP_ID " +
+               "WHERE p.AMOUNT>70000 " +
+               "GROUP BY d.DEPARTMENT_ID, d.DEPARTMENT_NAME " +
+               "ORDER BY d.DEPARTMENT_ID DESC;";
     }
+}
     
     private void submitSolution(String webhookUrl, String accessToken, String sqlQuery) {
         try {
