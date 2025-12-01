@@ -18,9 +18,9 @@ public class WebhookSolver {
     private static final String GENERATE_WEBHOOK_URL = "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA";
     
     // REPLACE THESE WITH YOUR DETAILS:
-    private static final String NAME = "Your Name";
-    private static final String REG_NO = "YourRegNumber";
-    private static final String EMAIL = "your@email.com";
+    private static final String NAME = "Bareera Qureishi";
+    private static final String REG_NO = "22BCE11440";
+    private static final String EMAIL = "bareera.qureishi7@gmail.com";
     
     @EventListener(ApplicationReadyEvent.class)
     public void solveProblem() {
